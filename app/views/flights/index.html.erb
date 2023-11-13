@@ -19,14 +19,19 @@
         <%= select_tag 'takeoff_year', options_for_select(@year_choices, params[:takeoff_year]), class: 'form-control' %>
       </div>
 
-      <%= submit_tag "Search", class: "btn" %>
+      <%= submit_tag "Search", class: "btn" %><br><br>
     <% end %>
   </div>
   <div class="flight-list">
-    <ul>
+    <%= form_with method: :get, url: new_booking_path do |f| %>
       <% @flights.each do |flight| %>
-      <li>DEPARTURE: <%= flight.departure_spaceport.code %> AT <%= flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> --- ARRIVAL: <%= flight.arrival_spaceport.code %> AT <%= (flight.takeoff + flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %> 
+        <label>
+        <%= f.radio_button :flight_id, flight.id %>
+        DEPARTURE: <%= flight.departure_spaceport.code %> AT <%= flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> --- ARRIVAL: <%= flight.arrival_spaceport.code %> AT <%= (flight.takeoff + flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %>
+        </label><br>      
       <% end %>
-    </ul>
+      <%= f.hidden_field :num_passengers, value: @num_passengers %>
+      <%= submit_tag "Select Flight And Continue", class: "btn" %>
+    <% end %>
   </div>
 </div>

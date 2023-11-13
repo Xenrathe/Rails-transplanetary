@@ -29,7 +29,7 @@ average_distances = {
 }
 
 # Generate flights
-number_of_flights = 32 # Adjust as needed
+number_of_flights = 64 # Adjust as needed
 
 number_of_flights.times do |index|
   departure_spaceport = spaceports[index % 8]
