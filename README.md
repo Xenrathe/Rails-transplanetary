@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Transplanetary, a spaceport(airport) booking toy app
 
-Things you may want to cover:
+### Primary:
 
-* Ruby version
+Transplanetary is a simple airport (spaceport, for flavoring) booking toy app, meant to demonstrate usage of complex forms and creating nested model entries.
 
-* System dependencies
+Transplanetary currently has no active webpage.
 
-* Configuration
+### Features:
+* Flexible flight searching based on arrival and departure spaceports and day of flight
+* Booking a flight also allows creation of individual Passenger model database entries
 
-* Database creation
+### Future to-do list
+* Creation of Transplanetary logo
+* Styling of views
+* Update passenger / add passenger integration for smoother operation
 
-* Database initialization
+### Design Brief
+This project was created as part of The Odin Project curriculum, specifically the <a href="https://www.theodinproject.com/lessons/ruby-on-rails-flight-booker">Flight Booker</a> project.
 
-* How to run the test suite
+### Image Attribution
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+No images currently used

@@ -1,4 +1,20 @@
 <div class="booking booking-new">
-  <h2>DEPARTURE: <%= @booking.flight.departure_spaceport.code %> AT <%= @booking.flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> --- ARRIVAL: <%= @booking.flight.arrival_spaceport.code %> AT <%= (@booking.flight.takeoff + @booking.flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %></h2>
-  
+  <h2>BOOK YOUR FLIGHT!</h2>
+  <h3>DEPARTURE: <%= @booking.flight.departure_spaceport.full_name %> (<%= @booking.flight.departure_spaceport.code %>) at <%= @booking.flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> </h3>
+  <h3>ARRIVAL: <%= @booking.flight.arrival_spaceport.full_name %> (<%= @booking.flight.arrival_spaceport.code %>) at <%= (@booking.flight.takeoff + @booking.flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %></h2>
+  <%= form_for(@booking) do |f| %>
+      <%= f.hidden_field :flight_id, value: @booking.flight_id %>
+      <%= f.fields_for :passengers do |sub_form| %>
+        <div class="sub-title">Passenger #<%= sub_form.index + 1 %>:
+        <div class="form-item">
+          <%= sub_form.label :name, "Name:" %>
+          <%= sub_form.text_field :name, required: true %>
+        </div>
+        <div class="form-item">
+          <%= sub_form.label :email, "Email:" %>
+          <%= sub_form.email_field :email, required: true %>
+        </div>
+      <% end %>
+    <%= f.submit %>
+  <% end %>
 </div>

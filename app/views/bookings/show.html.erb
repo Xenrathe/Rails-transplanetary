@@ -1,0 +1,11 @@
+<div class="booking booking-show">
+  <h2>BOOKING ID#<%= @booking.id %></h2>
+  <h3>DEPARTURE: <%= @booking.flight.departure_spaceport.full_name %> (<%= @booking.flight.departure_spaceport.code %>) at <%= @booking.flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> </h3>
+  <h3>ARRIVAL: <%= @booking.flight.arrival_spaceport.full_name %> (<%= @booking.flight.arrival_spaceport.code %>) at <%= (@booking.flight.takeoff + @booking.flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %></h2>
+  
+  <% @booking.passengers.each_with_index do |passenger, index| %>
+    <div class="sub-title">Passenger #<%= index + 1 %>:
+    <div class="detail">Name: <%= passenger.name %></div>
+    <div class="detail">Email: <%= passenger.email %></div><br>
+  <% end %>
+</div>
