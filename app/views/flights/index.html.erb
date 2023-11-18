@@ -1,5 +1,5 @@
 <div class="flight flight-index">
-  <div class="search-form">
+  <div class="search-form container-sm">
     <%= form_tag flights_path, method: :get do %>
       <div class="form-item">
         <%= label_tag :departure_spaceport, "Departure spaceport:" %>
@@ -19,16 +19,19 @@
         <%= select_tag 'takeoff_year', options_for_select(@year_choices, params[:takeoff_year]), class: 'form-control' %>
       </div>
 
-      <%= submit_tag "Search", class: "btn" %><br><br>
+      <%= submit_tag "Search", class: "btn btn-outline-secondary" %><br><br>
     <% end %>
   </div>
-  <div class="flight-list">
+  <h1 class="display-4 text-center">Select a Flight</h1>
+  <div class="flight-list container-fluid">
     <%= form_with method: :get, url: new_booking_path do |f| %>
       <% @flights.each do |flight| %>
-        <label>
-        <%= f.radio_button :flight_id, flight.id %>
-        DEPARTURE: <%= flight.departure_spaceport.code %> AT <%= flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> --- ARRIVAL: <%= flight.arrival_spaceport.code %> AT <%= (flight.takeoff + flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %>
-        </label><br>      
+      <div class="mt-2 d-flex justify-content-center">
+        <input type="radio" id="<%= "flight_#{flight.id}" %>" name="booking[flight_id]" value="<%= flight.id %>" class="btn-check" autocomplete="off">
+        <label class="btn btn-outline-secondary text-start fs-5 mx-auto" for="<%= "flight_#{flight.id}" %>">
+          <strong>DEPARTURE:</strong> <%= flight.departure_spaceport.code %> AT <%= flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> --- <strong>ARRIVAL:</strong> <%= flight.arrival_spaceport.code %> AT <%= (flight.takeoff + flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %>
+        </label>
+      </div>
       <% end %>
       <%= f.hidden_field :num_passengers, value: @num_passengers %>
       <%= submit_tag "Select Flight And Continue", class: "btn" %>
