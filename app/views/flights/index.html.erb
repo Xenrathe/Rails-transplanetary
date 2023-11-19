@@ -1,40 +1,94 @@
 <div class="flight flight-index">
-  <div class="search-form container-sm">
+  <div class="search-form container-fluid mt-2 shadow p-3">
     <%= form_tag flights_path, method: :get do %>
-      <div class="form-item">
-        <%= label_tag :departure_spaceport, "Departure spaceport:" %>
-        <%= select_tag 'departure_spaceport', options_for_select([["Any", nil]] + @spaceport_choices, params[:departure_spaceport]), class: 'form-control' %>
-      </div>
-      <div class="form-item">
-        <%= label_tag :arrival_spaceport, "Arrival spaceport:" %>
-        <%= select_tag 'arrival_spaceport', options_for_select([["Any", nil]] + @spaceport_choices, params[:arrival_spaceport]), class: 'form-control' %>
-      </div>
-      <div class="form-item">
-        <%= label_tag :passenger_num, "Passenger count:" %>
-        <%= select_tag 'passenger_num', options_for_select([1, 2, 3, 4], params[:passenger_num]), class: 'form-control' %>
-      </div>
-      <div class="form-item">
-        <%= label_tag :takeoff, "Departure date:" %>
-        <%= select_tag 'takeoff_monthday', options_for_select([["Any"]] + @monthday_choices, params[:takeoff_monthday]), class: 'form-control' %>
-        <%= select_tag 'takeoff_year', options_for_select(@year_choices, params[:takeoff_year]), class: 'form-control' %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-item">
+            <%= label_tag :departure_spaceport, "Departure spaceport:", class: "fw-bold" %>
+            <%= select_tag 'departure_spaceport', options_for_select([["Any", nil]] + @spaceport_choices, params[:departure_spaceport]), class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-item">
+            <%= label_tag :arrival_spaceport, "Arrival spaceport:", class: "fw-bold" %>
+            <%= select_tag 'arrival_spaceport', options_for_select([["Any", nil]] + @spaceport_choices, params[:arrival_spaceport]), class: 'form-control' %>
+          </div>
+        </div>
       </div>
 
-      <%= submit_tag "Search", class: "btn btn-outline-secondary" %><br><br>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-item">
+            <%= label_tag :takeoff, "Departure date:", class: "fw-bold" %>
+            <%= select_tag 'takeoff_monthday', options_for_select([["Any"]] + @monthday_choices, params[:takeoff_monthday]), class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-item">
+            <%= label_tag :takeoff_year, "Departure year:", class: "fw-bold" %>
+            <%= select_tag 'takeoff_year', options_for_select(@year_choices, params[:takeoff_year]), class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-item">
+            <%= label_tag :passenger_num, "Passenger count:", class: "fw-bold" %>
+            <%= select_tag 'passenger_num', options_for_select([1, 2, 3, 4], params[:passenger_num]), class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-8">
+          <div class="form-item d-flex align-items-end h-100">
+            <%= submit_tag "SEARCH", class: "btn btn-outline-secondary w-100" %><br><br>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
-  <h1 class="display-4 text-center">Select a Flight</h1>
+  <h1 class="display-4 text-center mt-3">Select a Flight</h1>
   <div class="flight-list container-fluid">
     <%= form_with method: :get, url: new_booking_path do |f| %>
+      <%= f.hidden_field :num_passengers, value: @num_passengers %>
       <% @flights.each do |flight| %>
       <div class="mt-2 d-flex justify-content-center">
-        <input type="radio" id="<%= "flight_#{flight.id}" %>" name="booking[flight_id]" value="<%= flight.id %>" class="btn-check" autocomplete="off">
-        <label class="btn btn-outline-secondary text-start fs-5 mx-auto" for="<%= "flight_#{flight.id}" %>">
+        <input type="radio" id="<%= "flight_#{flight.id}" %>" name="flight_id" value="<%= flight.id %>" class="btn-check" autocomplete="off">
+        <label class="btn btn-outline-secondary text-start fs-5" for="<%= "flight_#{flight.id}" %>">
           <strong>DEPARTURE:</strong> <%= flight.departure_spaceport.code %> AT <%= flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> --- <strong>ARRIVAL:</strong> <%= flight.arrival_spaceport.code %> AT <%= (flight.takeoff + flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %>
         </label>
       </div>
+      <%= submit_tag "SELECT FLIGHT AND CONTINUE", class: "my-1 mx-auto btn btn-outline-primary btn-lg", id: "selectFlightButton_#{flight.id}", style: "display: none;" %>
       <% end %>
-      <%= f.hidden_field :num_passengers, value: @num_passengers %>
-      <%= submit_tag "Select Flight And Continue", class: "btn" %>
     <% end %>
   </div>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    // Attach a change event listener to the radio buttons
+    var radioButtons = document.querySelectorAll('input[name="flight_id"]');
+    radioButtons.forEach(function(radioButton) {
+      radioButton.addEventListener("change", function() {
+        // Hide and disable all submit buttons
+        var submitButtons = document.querySelectorAll('[id^="selectFlightButton"]');
+        submitButtons.forEach(function(submitButton) {
+          submitButton.style.display = "none";
+          submitButton.disabled = true
+        });
+
+        var selectedFlightId = document.querySelector('input[name="flight_id"]:checked').value;
+        var selectedSubmitButton = document.getElementById('selectFlightButton_' + selectedFlightId);
+        if (selectedSubmitButton) {
+          selectedSubmitButton.style.display = "block";
+          // Timeout prevents accident double-click activation
+          setTimeout(function() {
+            selectedSubmitButton.disabled = false;
+          }, 800);
+        }
+      });
+    });
+  });
+</script>
+
 </div>
