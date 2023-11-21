@@ -1,16 +1,18 @@
+Passenger.delete_all
+Booking.delete_all
 Flight.delete_all
 Spaceport.delete_all
 
 
 spaceports_data = [
-  { full_name: 'Venus Observatory', code: 'VNO' },
-  { full_name: 'Earth', code: 'ERT' },
-  { full_name: 'Mars', code: 'MRS' },
-  { full_name: 'Phobos', code: 'PBS' },
-  { full_name: 'Ganymede', code: 'GNM' },
-  { full_name: 'Ceres', code: 'CER' },
-  { full_name: 'Titan', code: 'TTN' },
-  { full_name: 'Pluto', code: 'PLT' }
+  { full_name: 'Venus Observatory', code: 'VNO', population: 472, year_founded: 2112, img_url: 'venus.png', description: 'description' },
+  { full_name: 'Earth', code: 'ERT', population: 11500000000, year_founded: 2050, img_url: 'earth.png', description: 'description' },
+  { full_name: 'Mars', code: 'MRS', population: 27350000, year_founded: 2065, img_url: 'mars.png', description: 'description' },
+  { full_name: 'Phobos', code: 'PBS', population: 320000, year_founded: 2070, img_url: 'phobos.png', description: 'description' },
+  { full_name: 'Ganymede', code: 'GNM', population: 110000, year_founded: 2114, img_url: 'ganymede.png', description: 'description' },
+  { full_name: 'Ceres', code: 'CER', population: 12000000, year_founded: 2104, img_url: 'ceres.png', description: 'description' },
+  { full_name: 'Titan', code: 'TTN', population: 370000, year_founded: 2118, img_url: 'titan.png', description: 'description' },
+  { full_name: 'Pluto', code: 'PLT', population: 125, year_founded: 2130, img_url: 'pluto.png', description: 'description' }
 ]
 
 spaceports = spaceports_data.map { |sp| Spaceport.create(sp) }
@@ -29,7 +31,7 @@ average_distances = {
 }
 
 # Generate flights
-number_of_flights = 64 # Adjust as needed
+number_of_flights = 128 # Adjust as needed
 
 number_of_flights.times do |index|
   departure_spaceport = spaceports[index % 8]
