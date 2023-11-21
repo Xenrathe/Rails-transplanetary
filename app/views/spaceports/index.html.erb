@@ -1,3 +1,29 @@
 <div class="spaceports spaceports-index">
-  
+  <div class="container mt-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+      <% @spaceports.each do |spaceport| %>
+        <div class="col mb-4" data-controller="spaceportcards" data-action="click->spaceportcards#showSpaceportDetails" data-spaceport-id="<%= spaceport.id %>">
+          <div class="card bg-dark p-1" style="cursor: pointer;">
+            <%= image_tag spaceport.img_url, class: "card-img-top", alt: spaceport.code %>
+            <div class="card-body">
+              <h5 class="card-title text-light"><%= spaceport.full_name %></h5>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% @spaceports.each do |spaceport| %>
+    <div id="spaceportDetails_<%= spaceport.id %>" class="hidden-spaceport-details" style="display: none;">
+      <div class="container">
+        <h2><%= spaceport.full_name %></h2>
+        <p><strong>Code:</strong> <%= spaceport.code %></p>
+        <p><strong>Year Founded:</strong> <%= spaceport.year_founded %></p>
+        <p><strong>Population:</strong> <%= spaceport.population %></p>
+        <p><strong>Description:</strong> <%= spaceport.description %></p>
+        <%= link_to "Visit Now", flights_path(arrival_spaceport: spaceport.code), class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -3,7 +3,6 @@ Booking.delete_all
 Flight.delete_all
 Spaceport.delete_all
 
-
 spaceports_data = [
   { full_name: 'Venus Observatory', code: 'VNO', population: 472, year_founded: 2112, img_url: 'venus.png', description: 'description' },
   { full_name: 'Earth', code: 'ERT', population: 11500000000, year_founded: 2050, img_url: 'earth.png', description: 'description' },
