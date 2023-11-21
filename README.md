@@ -13,9 +13,10 @@ Transplanetary currently has no active webpage.
 * Booking a flight also allows creation of individual Passenger model database entries
 
 ### Future to-do list
-* Creation of Transplanetary logo
-* Styling of views
-* Update passenger / add passenger integration for smoother operation
+* Spaceport index with grid of planet images, click -> info pops up
+* Add passenger button for booking
+* Add booking # to show
+* Bookings index -> search for email + booking #
 
 ### Design Brief
 This project was created as part of The Odin Project curriculum, specifically the <a href="https://www.theodinproject.com/lessons/ruby-on-rails-flight-booker">Flight Booker</a> project.

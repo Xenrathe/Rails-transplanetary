@@ -1,20 +1,45 @@
 <div class="booking booking-new">
-  <h2>BOOK YOUR FLIGHT!</h2>
-  <h3>DEPARTURE: <%= @booking.flight.departure_spaceport.full_name %> (<%= @booking.flight.departure_spaceport.code %>) at <%= @booking.flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> </h3>
-  <h3>ARRIVAL: <%= @booking.flight.arrival_spaceport.full_name %> (<%= @booking.flight.arrival_spaceport.code %>) at <%= (@booking.flight.takeoff + @booking.flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %></h2>
-  <%= form_for(@booking) do |f| %>
+  <div class="mt-3 ps-3">
+    <h2>BOOK YOUR FLIGHT!</h2>
+    <h3>DEPARTURE: <%= @booking.flight.departure_spaceport.full_name %> (<%= @booking.flight.departure_spaceport.code %>) at <%= @booking.flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> </h3>
+    <h3>ARRIVAL: <%= @booking.flight.arrival_spaceport.full_name %> (<%= @booking.flight.arrival_spaceport.code %>) at <%= (@booking.flight.takeoff + @booking.flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %></h2>
+
+    <div class="d-flex gap-1 mt-3">
+      <%= form_with method: :get, url: new_booking_path do |f| %>
+        <%= f.hidden_field :flight_id, value: @booking.flight_id %>
+        <%= f.hidden_field :num_passengers, value: (@num_passengers + 1) %>
+        <%= f.submit @num_passengers >= 4 ? "Max 4 passengers" : "Add passenger", class: "btn btn-outline-secondary", disabled: @num_passengers >= 4 %>
+      <% end %>
+      <%= form_with method: :get, url: new_booking_path do |f| %>
+        <%= f.hidden_field :flight_id, value: @booking.flight_id %>
+        <%= f.hidden_field :num_passengers, value: (@num_passengers - 1) %>
+        <%= f.submit @num_passengers <= 1 ? "Min 1 passenger" : "Remove passenger", class: "btn btn-outline-secondary", disabled: @num_passengers <= 1 %>
+      <% end %>
+    </div>
+    
+    <%= form_for(@booking) do |f| %>
       <%= f.hidden_field :flight_id, value: @booking.flight_id %>
+
+    <div class="container row">
       <%= f.fields_for :passengers do |sub_form| %>
-        <div class="sub-title">Passenger #<%= sub_form.index + 1 %>:
-        <div class="form-item">
-          <%= sub_form.label :name, "Name:" %>
-          <%= sub_form.text_field :name, required: true %>
-        </div>
-        <div class="form-item">
-          <%= sub_form.label :email, "Email:" %>
-          <%= sub_form.email_field :email, required: true %>
+        <div class="col-xl-3 col-md-6 col-sm-12">
+          <div class="container p-3">
+            <div class="sub-title fw-bold">Passenger #<%= sub_form.index + 1 %>:</div>
+            <div class="form-item">
+              <%= sub_form.label :name, "Name:" %>
+              <%= sub_form.text_field :name, required: true %>
+            </div>
+            <div class="form-item">
+              <%= sub_form.label :email, "Email:" %>
+              <%= sub_form.email_field :email, required: true %>
+            </div>
+          </div>
         </div>
       <% end %>
-    <%= f.submit %>
-  <% end %>
+    </div>
+
+
+    <%= f.submit "Book Flight", class: "btn btn-outline-primary mt-3 w-50" %>
+    <% end %>
+  </div>
 </div>

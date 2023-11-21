@@ -30,6 +30,12 @@ class BookingsController < ApplicationController
     @booking = Booking.find(params[:id])
   end
 
+  def add_passenger
+    num_passengers = params[:num_passengers].present? ? params[:num_passengers].to_i : 1
+    params[:num_passengers] = (num_passengers + 1).to_s
+    render :new
+  end
+
   private
 
   def booking_params

@@ -32,18 +32,14 @@
       </div>
 
       <div class="row">
-        <div class="col-md-3">
-          <div class="form-item">
-            <%= label_tag :passenger_num, "Passenger count:", class: "fw-bold" %>
-            <%= select_tag 'passenger_num', options_for_select([1, 2, 3, 4], params[:passenger_num]), class: 'form-control' %>
-          </div>
-        </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
         </div>
         <div class="col-md-8">
           <div class="form-item d-flex align-items-end h-100">
             <%= submit_tag "SEARCH", class: "btn btn-outline-secondary w-100" %><br><br>
           </div>
+        </div>
+        <div class="col-md-2">
         </div>
       </div>
     <% end %>
@@ -51,7 +47,6 @@
   <h1 class="display-4 text-center mt-3">Select a Flight</h1>
   <div class="flight-list container-fluid">
     <%= form_with method: :get, url: new_booking_path do |f| %>
-      <%= f.hidden_field :num_passengers, value: @num_passengers %>
       <% @flights.each do |flight| %>
       <div class="mt-2 d-flex justify-content-center">
         <input type="radio" id="<%= "flight_#{flight.id}" %>" name="flight_id" value="<%= flight.id %>" class="btn-check" autocomplete="off">
@@ -59,7 +54,9 @@
           <strong>DEPARTURE:</strong> <%= flight.departure_spaceport.code %> AT <%= flight.takeoff.strftime("%H:%M, %m/%d/%Y") %> --- <strong>ARRIVAL:</strong> <%= flight.arrival_spaceport.code %> AT <%= (flight.takeoff + flight.duration.hours).strftime("%H:%M, %m/%d/%Y") %>
         </label>
       </div>
-      <%= submit_tag "SELECT FLIGHT AND CONTINUE", class: "my-1 mx-auto btn btn-outline-primary btn-lg", id: "selectFlightButton_#{flight.id}", style: "display: none;" %>
+      <div class="hidden-button justify-content-center gap-3 my-1 align-items-center" id="hidden-button-<%= flight.id %>" style="display: none;">
+        <%= submit_tag "SELECT FLIGHT AND CONTINUE", class: "btn btn-outline-primary btn-lg", id: "selectFlightButton_#{flight.id}", style: "min-height: 100%;" %>
+      </div>
       <% end %>
     <% end %>
   </div>
@@ -71,19 +68,19 @@
     radioButtons.forEach(function(radioButton) {
       radioButton.addEventListener("change", function() {
         // Hide and disable all submit buttons
-        var submitButtons = document.querySelectorAll('[id^="selectFlightButton"]');
-        submitButtons.forEach(function(submitButton) {
-          submitButton.style.display = "none";
-          submitButton.disabled = true
+        var hiddenButtons = document.querySelectorAll('.hidden-button');
+        hiddenButtons.forEach(function(hiddenButton) {
+          hiddenButton.style.display = "none";
+          hiddenButton.querySelector('.btn').disabled = true;
         });
 
         var selectedFlightId = document.querySelector('input[name="flight_id"]:checked').value;
-        var selectedSubmitButton = document.getElementById('selectFlightButton_' + selectedFlightId);
-        if (selectedSubmitButton) {
-          selectedSubmitButton.style.display = "block";
+        var selectedHiddenButton = document.getElementById('hidden-button-' + selectedFlightId);
+        if (selectedHiddenButton) {
+          selectedHiddenButton.style.display = "flex";
           // Timeout prevents accident double-click activation
           setTimeout(function() {
-            selectedSubmitButton.disabled = false;
+            selectedHiddenButton.querySelector('.btn').disabled = false;
           }, 800);
         }
       });
