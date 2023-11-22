@@ -6,7 +6,7 @@
           <div class="card bg-dark p-1" style="cursor: pointer;">
             <%= image_tag spaceport.img_url, class: "card-img-top", alt: spaceport.code %>
             <div class="card-body">
-              <h5 class="card-title text-light"><%= spaceport.full_name %></h5>
+              <h5 class="card-title text-light text-center"><%= spaceport.full_name %></h5>
             </div>
           </div>
         </div>
@@ -15,14 +15,14 @@
   </div>
 
   <% @spaceports.each do |spaceport| %>
-    <div id="spaceportDetails_<%= spaceport.id %>" class="hidden-spaceport-details" style="display: none;">
-      <div class="container">
-        <h2><%= spaceport.full_name %></h2>
-        <p><strong>Code:</strong> <%= spaceport.code %></p>
+    <div id="spaceportDetails_<%= spaceport.id %>" class="hidden-spaceport-details" data-controller="spaceportcards" data-action="click->spaceportcards#hideSpaceportDetails">
+      <div class="spaceport-overlay container bg-dark text-light">
+        <h2><%= spaceport.full_name %> (<%= spaceport.code %>)</h2>
+        <%= image_tag spaceport.img_url, size: "250x250", alt: spaceport.code %>
         <p><strong>Year Founded:</strong> <%= spaceport.year_founded %></p>
         <p><strong>Population:</strong> <%= spaceport.population %></p>
-        <p><strong>Description:</strong> <%= spaceport.description %></p>
-        <%= link_to "Visit Now", flights_path(arrival_spaceport: spaceport.code), class: "btn btn-primary" %>
+        <p class="p-4"><%= spaceport.description %></p>
+        <%= link_to "Visit Now", flights_path(arrival_spaceport: spaceport.id), class: "btn btn-outline-light" %>
       </div>
     </div>
   <% end %>

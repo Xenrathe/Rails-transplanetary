@@ -1,19 +1,26 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  
-  showSpaceportDetails(event) {
+
+  //Loads the more detailed spaceport overlay
+  // when user clicks on a spaceport 'card'
+  showSpaceportDetails() {
     const spaceportId = this.element.dataset.spaceportId;
-    console.log("Clicked spaceport " + spaceportId);
     
-    // Hide all spaceport details divs
     document.querySelectorAll('.hidden-spaceport-details').forEach(function (element) {
       element.style.display = 'none';
     });
   
-    // Show the selected spaceport details div
     const spaceportDetailsDiv = document.getElementById(`spaceportDetails_${spaceportId}`);
-    spaceportDetailsDiv.style.display = 'block';
+    spaceportDetailsDiv.style.display = 'flex';
+  }
+
+  // Hide all spaceport details divs
+  // when user clicks on spaceport overlay background
+  hideSpaceportDetails() {
+    document.querySelectorAll('.hidden-spaceport-details').forEach(function (element) {
+      element.style.display = 'none';
+    });
   }
 }
 
