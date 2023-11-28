@@ -20,7 +20,7 @@
         <h2><%= spaceport.full_name %> (<%= spaceport.code %>)</h2>
         <%= image_tag spaceport.img_url, size: "250x250", alt: spaceport.code %>
         <p><strong>Year Founded:</strong> <%= spaceport.year_founded %></p>
-        <p><strong>Population:</strong> <%= spaceport.population %></p>
+        <p><strong>Population:</strong> <%= spaceport.population.to_i %></p>
         <p class="p-4"><%= spaceport.description %></p>
         <%= link_to "Visit Now", flights_path(arrival_spaceport: spaceport.id), class: "btn btn-outline-light" %>
       </div>

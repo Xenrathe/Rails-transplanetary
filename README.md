@@ -12,15 +12,19 @@ Transplanetary currently has no active webpage.
 * Flexible flight searching based on arrival and departure spaceports and day of flight
 * Booking a flight also allows creation of individual Passenger model database entries
 
+### Development Notes
+* Uses Stimulus to implement javascript
+* Uses Bootstrap CSS
+
 ### Future to-do list
-* Spaceport index with grid of planet images, click -> info pops up
-* Add passenger button for booking
-* Add booking # to show
-* Bookings index -> search for email + booking #
+* Bookings index -> implements a turbo-frame
+* Flight index -> Don't show flights in the past
+* Flights index -> pagination
 
 ### Design Brief
 This project was created as part of The Odin Project curriculum, specifically the <a href="https://www.theodinproject.com/lessons/ruby-on-rails-flight-booker">Flight Booker</a> project.
 
 ### Image Attribution
 
-No images currently used
+* Planet icon in the Transplanetary Logo - <a href="https://thenounproject.com/dewanataicons/">Dewanata Visuals</a>
+* Planet photos via <a href="https://www.nasa.gov/images/">NASA images</a>

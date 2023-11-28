@@ -1,5 +1,18 @@
 class BookingsController < ApplicationController
 
+  def index
+    if params[:booking_id].present? && params[:passenger_email].present?
+      @booking = Booking.find_by(id: params[:booking_id])
+      
+      if @booking&.passengers&.pluck(:email)&.include?(params[:passenger_email])
+        redirect_to @booking
+      else
+        puts "Booking not found"
+        flash[:alert] = "Booking not found."
+      end
+    end
+  end
+
   def new
     if params[:flight_id].present?
       @booking = Booking.new(flight_id: params[:flight_id])
