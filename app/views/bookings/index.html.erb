@@ -1,5 +1,5 @@
 <div class="bookings bookings-index">
-  <h2>Find Booking</h2>
+  <h1 class="display-4 text-center">Find Booking</h1>
 
   <div class="search-form container-fluid mt-2 shadow p-3">
     <%= form_with url: bookings_path, method: :get do |f| %>
@@ -32,6 +32,10 @@
     <% end %>
   </div>
 
+  <% unless @booking.nil?%>
+    <%= turbo_frame_tag id="booking-show", src: booking_path(@booking) %>
+  <% end %>
+  
   <% if flash[:alert] %>
   <h3 class="alert alert-danger">
     <%= flash[:alert] %>

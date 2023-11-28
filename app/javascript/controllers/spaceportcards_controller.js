@@ -17,10 +17,14 @@ export default class extends Controller {
 
   // Hide all spaceport details divs
   // when user clicks on spaceport overlay background
-  hideSpaceportDetails() {
-    document.querySelectorAll('.hidden-spaceport-details').forEach(function (element) {
-      element.style.display = 'none';
-    });
+  hideSpaceportDetails(event) {
+    // Only hide if BACKGROUND is clicked, not the card itself
+    if (event.target.classList.contains('hidden-spaceport-details') &&
+        !event.target.classList.contains('spaceport-overlay-container')) {
+      document.querySelectorAll('.hidden-spaceport-details').forEach(function (element) {
+        element.style.display = 'none';
+      });
+    }
   }
 }
 

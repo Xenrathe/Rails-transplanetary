@@ -4,11 +4,9 @@ class BookingsController < ApplicationController
     if params[:booking_id].present? && params[:passenger_email].present?
       @booking = Booking.find_by(id: params[:booking_id])
       
-      if @booking&.passengers&.pluck(:email)&.include?(params[:passenger_email])
-        redirect_to @booking
-      else
-        puts "Booking not found"
-        flash[:alert] = "Booking not found."
+      unless @booking&.passengers&.pluck(:email)&.include?(params[:passenger_email])
+        @booking = nil
+        flash.now[:alert] = "Booking not found for ID: #{params[:booking_id]}, EMAIL: #{params[:passenger_email]}."
       end
     end
   end

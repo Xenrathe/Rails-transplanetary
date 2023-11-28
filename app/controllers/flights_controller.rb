@@ -1,7 +1,7 @@
 class FlightsController < ApplicationController
 
   def index
-    @flights = Flight.all.order(takeoff: :asc)
+    @flights = Flight.upcoming.order(takeoff: :asc)
     @spaceport_choices = Spaceport.all.map{ |sp| [ sp.full_name, sp.id ]}
 
     # Filter: based on departure spaceport

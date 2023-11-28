@@ -17,8 +17,6 @@ Transplanetary currently has no active webpage.
 * Uses Bootstrap CSS
 
 ### Future to-do list
-* Bookings index -> implements a turbo-frame
-* Flight index -> Don't show flights in the past
 * Flights index -> pagination
 
 ### Design Brief
